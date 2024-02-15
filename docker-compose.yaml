@@ -1,0 +1,66 @@
+services:
+  reservation:
+    build:
+      context: .
+      dockerfile: ./apps/reservation/Dockerfile
+      target: development
+    command: pnpm run start:dev reservation # for developmet test
+    env_file:
+      - ./apps/reservation/.env
+    ports:
+      - '3000:3000'
+    # volumes:
+    # - .:/usr/src/app
+    # - /usr/src/app/node_modules
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    command: pnpm run start:dev auth
+    env_file:
+      - ./apps/auth/.env
+    ports:
+      - '3001:3001'
+    # volumes:
+    # - .:/usr/src/app
+    # - /usr/src/app/node_modules
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+  payments:
+    build:
+      context: .
+      dockerfile: ./apps/payments/Dockerfile
+      target: development
+    command: pnpm run start:dev payments
+    env_file:
+      - ./apps/payments/.env
+    # ports:
+    #   - '3003:3003'
+    # volumes:
+    # - .:/usr/src/app
+    # - /usr/src/app/node_modules
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+  notifications:
+    build:
+      context: .
+      dockerfile: ./apps/notifications/Dockerfile
+      target: development
+    command: pnpm run start:dev notifications
+    env_file:
+      - ./apps/notifications/.env
+    # volumes:
+    # - .:/usr/src/app
+    # - /usr/src/app/node_modules
+
+  mongo:
+    image: mongo
